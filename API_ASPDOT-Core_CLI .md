@@ -1,4 +1,5 @@
 # GIỚI THIỆU
+---
 
 >Bài hướng dẫn này sẽ chỉ bạn các bước cơ bản để tạo một Web API sử dụng ASP.net Core của Microsoft.
 
@@ -22,7 +23,9 @@ Trong chuỗi bài này bạn sẽ được học:
 - Nắm được cơ bản về C#
 - Nắm kiến thức về RESTful và HTTP
 
+
 # TẠO PROJECT WEB API
+---
 
 Sử dụng .NET core CLI là cách đơn giản nhất để tạo ASP.NET Core web API. CLI đã được tích hợp sẵn vào trong Azure Cloud Shell, nên rất thuận tiện trong việc phát triện trên Azure.
 
@@ -111,6 +114,7 @@ kill $(pidof dotnet)
 ```
 
 # THÊM DATA
+---
 
 Class `Model` cần thiết để mô tả đại diện *sản phẩm* ở trong *kho*. `Model` mô tả rõ ràng và đầy đủ tính chất của *sản phẩm* và được dùng truyền dữ liệu Web API. Nhờ `Model` giữ tính *Bất biến* cho *Sản phẩm* trong *Kho hàng*. Dữ liệu được tạo như là [linkin-memory EF Core database](https://docs.microsoft.com/en-us/ef/core/providers/in-memory/).
 
@@ -312,6 +316,108 @@ namespace ContosoPets.Api
 ```bash
 dotnet build
 ```
+
+# THÊM CONTROLLER
+---
+`Controller` là public class gồm một hoặc nhiều method Public, được biết như là method thực thi `action`. `action` có thể được gọi thông qua HTTP endpoints ngay bên trong `web API controller`.
+
+1. Thêm Controller vào Project
+
+```bash
+touch ./Controllers/ProductsController.cs
+```
+
+`ProductsController.cs` được tạo trong folder `Controller`. Folder `Controller` được đặt tên đúng theo quy ước của mô hình MVC.
+
+2. Thêm code vào `Controllers/ProductsController.cs`
+
+```csharp
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ContosoPets.Api.Data;
+using ContosoPets.Api.Models;
+
+namespace ContosoPets.Api.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductsController : ControllerBase
+    {
+        private readonly ContosoPetsContext _context;
+
+        public ProductsController(ContosoPetsContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
+        public ActionResult<List<Product>> GetAll() =>
+            _context.Products.ToList();
+
+        // GET by ID action
+
+        // POST action
+
+        // PUT action
+
+        // DELETE action
+    }
+}
+```
+
+Class này xuất phát từ `ControllerBase`. Là class gốc cho MVC controller không có web UI support.
+
+| Method| Ý nghĩa |
+|---|---|
+| `[Route]` | định nghĩa đường dẫn định tuyến `api/[controller]`. `[controller]` token được thay thế bằng tên của controller|
+| `[ApiController]` | thêm những Behavior [các tham số](https://docs.microsoft.com/aspnet/core/web-api/#binding-source-parameter-inference), [các thuộc tính routing](https://docs.microsoft.com/aspnet/core/web-api/#attribute-routing-requirement),[xử lý lỗi](https://docs.microsoft.com/aspnet/core/web-api/#automatic-http-400-responses). |
+
+
+- Cấu trúc Injecttion có thể gọi các Depencies khi cần thiết. 
+- Hành động HTTP GET được đặt tên là `Getall()` để lấy tất cả các thông tin về sản phẩm
+
+3. Chạy Web API
+
+```bash
+dotnet run > ContosoPets.Api.log &
+```
+
+4. Test kết quả
+
+```bash
+curl -k -s https://localhost:5001/api/products | jq
+```
+
+Kết JSON được trả về:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Squeaky Bone",
+    "price": 20.99
+  },
+  {
+    "id": 2,
+    "name": "Knotted Rope",
+    "price": 12.99
+  }
+]
+```
+
+5. Dừng tất các tiến trình của .NET Core app:
+
+```bash
+kill $(pidof dotnet)
+```
+
+
+
+
+
 
 
 
