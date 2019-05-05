@@ -9,7 +9,7 @@ Bài này sẽ hướng dẫn tạo nên một `cross-platform` RESTful với `A
 
 Chuỗi bài này sẽ [.NET Core CLI](https://docs.microsoft.com/dotnet/core/tools/) để hướng dẫn phát triển một Web API. Sau khi hoàn thành chuỗi đề Hướng dẫn này, bạn có thể áp dụng để phát triển ở các môi trường khác như `Visual Studio` (Window), `Visual Studio for Mac`(MacOS) hoặc `Visual Studio Code` (Windows, Linux, & macOS).
 
-## Mục tiêu
+### Mục tiêu
 
 Trong chuỗi bài này bạn sẽ được học:
 
@@ -18,7 +18,7 @@ Trong chuỗi bài này bạn sẽ được học:
 - Thêm CRUD vào web API
 - Test Web API
 
-## Điều kiện tiên quyết
+### Điều kiện tiên quyết
 
 - Nắm được cơ bản về C#
 - Nắm kiến thức về RESTful và HTTP
@@ -29,7 +29,6 @@ Trong chuỗi bài này bạn sẽ được học:
 
 Sử dụng .NET core CLI là cách đơn giản nhất để tạo ASP.NET Core web API. CLI đã được tích hợp sẵn vào trong Azure Cloud Shell, nên rất thuận tiện trong việc phát triện trên Azure.
 
-## Tạo mới Project
 
 ### Mổ xẻ thành phần
 
@@ -68,7 +67,7 @@ Project `ContosoPets.Api` sẽ được mở trực tiếp ở editor.
 | *ContosoPets.Api.csproj* | Chứa cấu hình metadata của project |
 | *Startup.cs* |  Cấu hình dịch vụ và là nơi nhận lệnh HTTP |
 
-## Build và Test
+### Build và Test
 
 1. Chạy dòng code trên CMD:
 
@@ -414,6 +413,8 @@ Kết JSON được trả về:
 kill $(pidof dotnet)
 ```
 
+
+# THÊM CRUD
 
 
 
